@@ -1,5 +1,19 @@
+<<<<<<< HEAD
 /**/__pycache__/
 /**/**/__pycache__/
 __pycache__/
 PyUI/
 
+=======
+<<<<<<< HEAD
+/PyUI/
+/TVPoke/__pycache__/
+/TVPoke/Pokemon/__pycache__/
+/TVPoke/BaseClasses/__pycache__/
+/__pycache__/
+=======
+*.cpython*
+**/__pycache__/
+PyUI/
+>>>>>>> 3fb80155d24335b717451413bdc348e44c136b39
+>>>>>>> fbc45acfe76ed0c2606a91cbbf05c3a8682a3b88
