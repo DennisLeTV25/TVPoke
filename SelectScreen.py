@@ -4,7 +4,7 @@ from TVPoke.helper import getAllPokemonNames
 
 class SelectScreen(Screen):
     def __init__(self, window):
-        super().__init__(window, (4,50,3))
+        super().__init__(window, (200, 40, 40))
         self.state = {
             "trainerIndex": 0,
             "selectedPoke": [[], []],

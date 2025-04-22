@@ -4,7 +4,9 @@ from PyUI.PageElements import *
 
 class BattleScreen(Screen):
     def __init__(self, window):
-        super().__init__(window, (25, 255, 40))
+        super().__init__(window, (25, 150, 40))
+        self.backGround = Image((50, 50), 100, 100, "./imgs/Pokemon Background.jpg")
+        self.attacking = False
 
     def addTrainers(self, trainer1Poke, trainer2Poke):
         self.trainers = [
@@ -12,19 +14,60 @@ class BattleScreen(Screen):
             Trainer(trainer2Poke)
         ]
         
+        
     def elementsToDisplay(self):
-        self.elements = []
+        self.elements = [Image((50, 50), 100, 100, "./imgs/Pokemon Background.png")]
 
-        y = 0
+        if self.attacking == True:
+            y = 60
+            x = 0
+            for trainer in self.trainers:
+                for poke in trainer.pokemon:
+                    if poke.stats == True:
+                            for i in range(len(poke.moves)):
+                                MoveButton((x, y), 20, 10, "Attack")
+                                x += 20
+                                if x > 25:
+                                    y = 40
+
+        y = -50
         #two rows of three
         for trainer in self.trainers:
-            x = 0
-            y += 100/3
+            x = 20
+            y += 70
+            side = 1
+            if self.trainers.index(trainer) != 0:
+                x += 80
+                side = -1
             for poke in trainer.pokemon:
-                x += 100/4
-                self.elements.append(Image((x, y), 20, 20, poke.img))
-                self.elements.append(Label((x, y + 10), 20, 10, poke.name))
-                
+                if trainer.pokemon.index(poke) == 0:
+                    poke.stats = True
+                    x += 15 * side
+                    self.elements.append(Image((x, y), 30, 30, poke.img))
+                    self.elements.append(Label((x, y + (10 * side)), 30, 15, poke.name))
+                    self.elements.append(Label((x, y - (13 * side)), 30, 15, str(poke.hp)))
+                    x += 10 * side
+                    y -= 5 * side
+                else:
+                    x += 15 * side
+                    y -= 3 * side
+                    self.elements.append(Image((x, y), 15, 15, poke.img))
+                    self.elements.append(Label((x, y + (7 * side)), 11, 5, poke.name))
+                    self.elements.append(Label((x, y - (9 * side)), 30, 15, str(poke.hp)))
+        
+        # self.elements.append(Rectangle((23, 60), 42, 35, (50, 125, 50)))
+        self.elements.append(AtkButton())
+
+class AtkButton(Button):
+    def __init__(self):
+        super().__init__((14, 71), 20, 10, "Attack")
+
+    def onClick(self, screen):
+        screen.attacking = True
+
+class MoveButton(Button):
+    def __init__(self, centerXY, width, height, text):
+        super().__init__(centerXY, width, height, text)
 
 
 
