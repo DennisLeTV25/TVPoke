@@ -5,7 +5,7 @@ from PyUI.PageElements import *
 class BattleScreen(Screen):
     def __init__(self, window):
         super().__init__(window, (25, 150, 40))
-        self.backGround = Image((50, 50), 100, 100, "./imgs/Pokemon Background.jpg")
+        self.backGround = Image((50, 50), 100, 100, "./imgs/Pokemon Background.png")
         self.attacking = False
 
     def addTrainers(self, trainer1Poke, trainer2Poke):
@@ -56,19 +56,22 @@ class BattleScreen(Screen):
                     self.elements.append(Label((x, y - (9 * side)), 30, 15, str(poke.hp)))
         
         # self.elements.append(Rectangle((23, 60), 42, 35, (50, 125, 50)))
-        self.elements.append(AtkButton())
+        x = 20
+        y = 20
+        for move in self.trainers[0].pokemon[0].moves:
+            self.elements.append(AtkButton(x, y, move))
+            y += 15
 
 class AtkButton(Button):
-    def __init__(self):
-        super().__init__((14, 71), 20, 10, "Attack")
+    def __init__(self, x, y,move):
+        super().__init__((x, y), 20, 10, move.name)
+        self.move = move
 
     def onClick(self, screen):
-        screen.attacking = True
+        screen.trainers[1].pokemon[0].hp -= self.move.power
+        screen.trainers.reverse()
+        #do a lot more, like check if there are fainted pokemon, check if someone won
 
 class MoveButton(Button):
     def __init__(self, centerXY, width, height, text):
         super().__init__(centerXY, width, height, text)
-
-
-
-
